@@ -251,7 +251,7 @@
   <header>
     <p class="logo">📚 La Boîte à Livres</p>
     <h1>Trouve ton <em>prochain</em> livre</h1>
-    <p class="subtitle">Recherche un titre, un auteur ou un ISBN — ajoute-le directement dans ton Notion ✨</p>
+    <p class="subtitle">Recherche un titre ou un auteur — ajoute-le directement dans ton Notion ✨</p>
   </header>
 
   <!-- ── Config Panel ── -->
@@ -325,7 +325,7 @@
   <div class="search-area">
     <div class="search-box">
       <div class="search-icon">🔍</div>
-      <input type="text" id="searchInput" placeholder="Le seigneur des anneaux, Victor Hugo, 9782070360024…" autocomplete="off">
+      <input type="text" id="searchInput" placeholder="Le seigneur des anneaux, Victor Hugo, ..." autocomplete="off">
       <button id="searchBtn">Rechercher</button>
     </div>
     <div class="search-tips">
@@ -359,7 +359,7 @@
     <p class="how-to-title">💡 Comment utiliser cet outil ?</p>
     <ol>
       <li>Configure ta connexion Notion <strong>une seule fois</strong> en haut</li>
-      <li>Recherche un livre par <strong>titre, auteur ou ISBN</strong></li>
+      <li>Recherche un livre par <strong>titre ou auteur</strong></li>
       <li>Clique <strong>"📚 Ajouter à Notion"</strong> — le livre apparaît dans ta bibliothèque !</li>
       <li>Tes infos de connexion sont <strong>sauvegardées dans ton navigateur</strong> 🔒</li>
     </ol>
@@ -460,18 +460,17 @@ const genreRules = [
   { keywords: ['fantasy', 'fantaisie', 'fantastique', 'magic'],     genre: '🐉 Fantaisie' },
   { keywords: ['thriller', 'suspense'],                              genre: '🔪 Thrillers' },
   { keywords: ['mystery', 'detective', 'crime', 'policier','polar'],genre: '🚨 Policiers' },
-  { keywords: ['romance', 'love story', 'amour'],                   genre: '💖 Romance' },
-  { keywords: ['comics', 'manga', 'graphic novel', 'bande dessin'], genre: '🎨 BD / Manga / Roman graphique' },
-  { keywords: ['biography', 'autobio', 'memoir', 'témoignage'],     genre: '✍️ Biographie & Témoignage' },
+  { keywords: ['romance', 'love story', 'amour', 'love'],                   genre: '💖 Romance' },
+  { keywords: ['comics', 'manga', 'graphic novel', 'bande dessin', 'bd'], genre: '🎨 BD / Manga / Roman graphique' },
+  { keywords: ['biography', 'autobio', 'memoir', 'témoignage', 'bio', 'biographie'],     genre: '✍️ Biographie & Témoignage' },
   { keywords: ['history', 'histoire', 'historical', 'society'],     genre: '🌍 Histoire & Société' },
-  { keywords: ['self-help', 'personal development', 'motivation'],  genre: '🧠 Développement Personnel' },
   { keywords: ['business', 'entrepreneurship', 'startup'],          genre: '💡 Entrepreneuriat & Business' },
   { keywords: ['computers', 'programming', 'software', 'tech'],     genre: '🛠️ Bureautique & Tech' },
-  { keywords: ['design', 'graphisme', 'typography'],                genre: '🖼️ Design & Graphisme' },
+  { keywords: ['design', 'graphisme', 'typography', 'art'],                genre: '🖼️ Design & Graphisme' },
   { keywords: ['marketing', 'advertising', 'sales', 'vente'],       genre: '📢 Marketing & Vente' },
   { keywords: ['travel', 'voyage', 'adventure', 'aventure'],        genre: '✈️ Voyage & Aventure' },
   { keywords: ['health', 'wellness', 'bien-être', 'yoga'],          genre: '🧘Bien-être' },
-  { keywords: ['psychology', 'psychologie', 'neuroscience'],        genre: '🧠 Développement Personnel' },
+  { keywords: ['psychology', 'psychologie', 'neuroscience', 'self-help', 'personal development', 'motivation'],        genre: '🧠 Développement Personnel' },
   { keywords: ['education', 'pédagogie', 'formation'],              genre: '🏫 Pédagogie & Formation' },
   { keywords: ['productivity', 'organisation', 'habits'],           genre: '📈 Productivité & Organisation' },
   { keywords: ['philosophy', 'classic', 'classique', 'literary'],   genre: '🎭 Classiques' },
