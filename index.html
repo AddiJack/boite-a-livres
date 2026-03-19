@@ -511,7 +511,7 @@
   // ─── CONFIGURATION ───────────────────────────────────────────────
   // Remplace cette URL par l'URL de ton backend Vercel après déploiement
   // Exemple : https://boite-a-livres-api.vercel.app/api/add-book
-  const VERCEL_API_URL = 'https://boite-a-livres-api.vercel.app/api/add-book';
+  const VERCEL_API_URL = 'REMPLACE_PAR_TON_URL_VERCEL/api/add-book';
   // ─────────────────────────────────────────────────────────────────
 
   const isConfigured = !VERCEL_API_URL.includes('REMPLACE_PAR');
@@ -525,26 +525,38 @@
   const resultsCount = document.getElementById('resultsCount');
   const toast = document.getElementById('toast');
 
-  const genreMap = {
-    'fiction': '🐉 Fantaisie', 'fantasy': '🐉 Fantaisie',
-    'science fiction': '🚀 Science-Fiction', 'thriller': '🔪 Thrillers',
-    'mystery': '🚨 Policiers', 'detective': '🚨 Policiers',
-    'romance': '💖 Romance', 'comics': '🎨 BD / Manga / Roman graphique',
-    'manga': '🎨 BD / Manga / Roman graphique', 'biography': '✍️ Biographie & Témoignage',
-    'history': '🌍 Histoire & Société', 'self-help': '🧠 Développement Personnel',
-    'business': '💡 Entrepreneuriat & Business', 'computers': '🛠️ Bureautique & Tech',
-    'technology': '🛠️ Bureautique & Tech', 'design': '🖼️ Design & Graphisme',
-    'marketing': '📢 Marketing & Vente', 'travel': '✈️ Voyage & Aventure',
-    'health': '🧘Bien-être', 'psychology': '🧠 Développement Personnel',
-    'education': '🏫 Pédagogie & Formation', 'productivity': '📈 Productivité & Organisation',
-    'philosophy': '🎭 Classiques', 'classic': '🎭 Classiques', 'literary': '🎭 Classiques',
-  };
+  // Genre detection — ordered from most specific to least specific
+  // Uses exact word boundaries to avoid false matches (e.g. "fiction" matching "science fiction" before "fantasy")
+  const genreRules = [
+    { keywords: ['science fiction', 'sci-fi', 'scifi'], genre: '🚀 Science-Fiction' },
+    { keywords: ['fantasy', 'fantaisie', 'fantastique', 'magic', 'dragons', 'sorcery'], genre: '🐉 Fantaisie' },
+    { keywords: ['thriller', 'suspense'], genre: '🔪 Thrillers' },
+    { keywords: ['mystery', 'detective', 'crime', 'policier', 'polar'], genre: '🚨 Policiers' },
+    { keywords: ['romance', 'love story', 'amour'], genre: '💖 Romance' },
+    { keywords: ['comics', 'manga', 'graphic novel', 'bande dessinée', 'bd'], genre: '🎨 BD / Manga / Roman graphique' },
+    { keywords: ['biography', 'biographie', 'autobiography', 'memoir', 'témoignage'], genre: '✍️ Biographie & Témoignage' },
+    { keywords: ['history', 'histoire', 'historical', 'society', 'sociologie'], genre: '🌍 Histoire & Société' },
+    { keywords: ['self-help', 'personal development', 'développement personnel', 'motivation'], genre: '🧠 Développement Personnel' },
+    { keywords: ['business', 'entrepreneurship', 'entrepreneuriat', 'startup', 'management'], genre: '💡 Entrepreneuriat & Business' },
+    { keywords: ['computers', 'programming', 'software', 'technology', 'informatique'], genre: '🛠️ Bureautique & Tech' },
+    { keywords: ['design', 'graphisme', 'graphic design', 'typography'], genre: '🖼️ Design & Graphisme' },
+    { keywords: ['marketing', 'advertising', 'publicité', 'sales', 'vente'], genre: '📢 Marketing & Vente' },
+    { keywords: ['travel', 'voyage', 'adventure', 'aventure', 'exploration'], genre: '✈️ Voyage & Aventure' },
+    { keywords: ['health', 'wellness', 'bien-être', 'mindfulness', 'yoga', 'meditation'], genre: '🧘Bien-être' },
+    { keywords: ['psychology', 'psychologie', 'neuroscience'], genre: '🧠 Développement Personnel' },
+    { keywords: ['education', 'pédagogie', 'teaching', 'learning', 'formation'], genre: '🏫 Pédagogie & Formation' },
+    { keywords: ['productivity', 'organisation', 'habits', 'time management'], genre: '📈 Productivité & Organisation' },
+    { keywords: ['philosophy', 'philosophie', 'classic', 'classique', 'literary fiction'], genre: '🎭 Classiques' },
+  ];
 
   function guessGenre(categories) {
     if (!categories?.length) return null;
     const raw = categories.join(' ').toLowerCase();
-    for (const [key, val] of Object.entries(genreMap)) {
-      if (raw.includes(key)) return val;
+    for (const rule of genreRules) {
+      for (const kw of rule.keywords) {
+        // Match exact keyword (with word boundaries)
+        if (raw.includes(kw)) return rule.genre;
+      }
     }
     return null;
   }
