@@ -40,7 +40,7 @@
   .wrapper {
     position: relative;
     z-index: 1;
-    max-width: 1200px;
+    max-width: 960px;
     margin: 0 auto;
     padding: 40px 24px 80px;
   }
@@ -178,7 +178,7 @@
   .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
 
   /* Results */
-  #results { margin-top: 32px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  #results { margin-top: 32px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
   .results-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; padding: 0 2px; }
   .results-count { font-size: 13px; color: var(--brown-light); }
   .results-count strong { color: var(--brown); font-weight: 600; }
@@ -190,15 +190,15 @@
   }
   .book-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px var(--shadow); }
 
-  .cover-wrap { width: 75px; flex-shrink: 0; background: var(--cream-dark); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+  .cover-wrap { width: 85px; flex-shrink: 0; background: var(--cream-dark); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
   .cover-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .cover-placeholder { font-size: 28px; opacity: 0.5; }
   .cover-wrap::after { content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(to bottom, var(--accent), var(--gold)); opacity: 0.4; }
 
   .card-body { flex: 1; padding: 10px 12px; min-width: 0; }
   .card-genre { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
-  .card-title { font-family: 'Playfair Display', serif; font-size: 13px; font-weight: 700; color: var(--brown); line-height: 1.3; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .card-author { font-size: 11px; color: var(--brown-light); margin-bottom: 6px; font-style: italic; }
+  .card-title { font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 700; color: var(--brown); line-height: 1.3; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .card-author { font-size: 12px; color: var(--brown-light); margin-bottom: 8px; font-style: italic; }
   .card-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
   .meta-pill { display: flex; align-items: center; gap: 4px; font-size: 11px; color: var(--brown-mid); background: var(--cream); padding: 3px 8px; border-radius: 20px; border: 1px solid rgba(107,76,59,0.1); }
   .card-description { font-size: 12px; color: var(--brown-mid); line-height: 1.5; max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
@@ -241,8 +241,7 @@
   .book-card:nth-child(5) { animation-delay: 0.25s; }
 
   .active-tag { background: var(--brown-light) !important; color: white !important; border-color: transparent !important; }
-  @media (max-width: 1100px) { #results { grid-template-columns: repeat(3, 1fr); } }
-  @media (max-width: 750px)  { #results { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 780px)  { #results { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 480px)  { #results { grid-template-columns: 1fr; } h1 { font-size: 24px; } }
 </style>
 </head>
@@ -338,8 +337,8 @@
     </div>
     <div class="search-tips" style="margin-top:8px">
       <span class="tip-label">Résultats :</span>
-      <span class="tag" id="btn20" onclick="setMax(20)">20</span>
-      <span class="tag active-tag" id="btn40" onclick="setMax(40)">40 ✓</span>
+      <span class="tag active-tag" id="btn30" onclick="setMax(30)">30 ✓</span>
+      <span class="tag" id="btn60" onclick="setMax(60)">60</span>
     </div>
   </div>
 
@@ -618,14 +617,14 @@ const resultsWrap = document.getElementById('resultsWrap');
 const resultsEl   = document.getElementById('results');
 const resultsCount = document.getElementById('resultsCount');
 
-let maxResults = 40;
+let maxResults = 30;
 
 function setMax(n) {
   maxResults = n;
-  document.getElementById('btn20').className = 'tag' + (n === 20 ? ' active-tag' : '');
-  document.getElementById('btn20').textContent = n === 20 ? '20 ✓' : '20';
-  document.getElementById('btn40').className = 'tag' + (n === 40 ? ' active-tag' : '');
-  document.getElementById('btn40').textContent = n === 40 ? '40 ✓' : '40';
+  document.getElementById('btn30').className = 'tag' + (n === 30 ? ' active-tag' : '');
+  document.getElementById('btn30').textContent = n === 30 ? '30 ✓' : '30';
+  document.getElementById('btn60').className = 'tag' + (n === 60 ? ' active-tag' : '');
+  document.getElementById('btn60').textContent = n === 60 ? '60 ✓' : '60';
   // Re-search if there's already a query
   const q = document.getElementById('searchInput').value.trim();
   if (q) doSearch(q);
