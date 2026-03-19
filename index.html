@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🔍 Recherche de Livres — La Boîte à Livres</title>
+<title>📚 La Boîte à Livres — Recherche</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -13,7 +13,6 @@
     --brown-mid: #6B4C3B;
     --brown-light: #A0785A;
     --accent: #C8563A;
-    --accent-light: #E8A090;
     --green: #4A7C59;
     --gold: #D4A843;
     --shadow: rgba(61,43,31,0.12);
@@ -46,59 +45,95 @@
     padding: 40px 24px 80px;
   }
 
+  /* Header */
   header {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 32px;
     animation: fadeDown 0.6s ease both;
   }
-
-  .logo {
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--brown-light);
-    margin-bottom: 10px;
-  }
-
-  h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(28px, 5vw, 42px);
-    font-weight: 700;
-    color: var(--brown);
-    line-height: 1.1;
-    margin-bottom: 8px;
-  }
-
+  .logo { font-size: 13px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--brown-light); margin-bottom: 10px; }
+  h1 { font-family: 'Playfair Display', serif; font-size: clamp(26px, 5vw, 40px); font-weight: 700; color: var(--brown); line-height: 1.1; margin-bottom: 8px; }
   h1 em { color: var(--accent); font-style: italic; }
+  .subtitle { font-size: 14px; color: var(--brown-light); font-weight: 300; }
 
-  .subtitle {
-    font-size: 14px;
-    color: var(--brown-light);
-    font-weight: 300;
-  }
-
-  /* Config banner */
-  .config-banner {
-    background: #FFF8E7;
+  /* ── Config Panel ── */
+  .config-panel {
+    background: white;
     border: 1.5px solid var(--gold);
-    border-radius: 12px;
-    padding: 14px 18px;
+    border-radius: 16px;
+    padding: 20px 22px;
     margin-bottom: 24px;
-    font-size: 13px;
-    color: var(--brown-mid);
-    display: flex;
-    align-items: center;
-    gap: 10px;
     animation: fadeDown 0.5s ease both;
   }
-  .config-banner.hidden { display: none; }
-  .config-banner a { color: var(--accent); font-weight: 600; text-decoration: none; }
-  .config-banner a:hover { text-decoration: underline; }
+  .config-panel.connected { border-color: var(--green); background: #F6FBF7; }
+
+  .config-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+  .config-title { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; color: var(--brown); display: flex; align-items: center; gap: 8px; }
+  .config-subtitle { font-size: 12px; color: var(--brown-light); margin-bottom: 14px; }
+  .config-subtitle a { color: var(--accent); font-weight: 600; text-decoration: none; }
+  .config-subtitle a:hover { text-decoration: underline; }
+
+  .config-fields { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+  .config-field { display: flex; flex-direction: column; gap: 4px; }
+  .config-field label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brown-mid); }
+  .config-field input {
+    border: 1.5px solid rgba(107,76,59,0.15);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--brown);
+    outline: none;
+    transition: border-color 0.2s;
+    background: var(--cream);
+    width: 100%;
+  }
+  .config-field input:focus { border-color: var(--accent); background: white; }
+  .config-field input::placeholder { color: var(--brown-light); opacity: 0.6; }
+
+  .config-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .btn-save {
+    background: var(--accent); color: white; border: none;
+    padding: 10px 20px; border-radius: 10px;
+    font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .btn-save:hover { background: #B34A30; }
+  .btn-reset {
+    background: none; border: 1.5px solid rgba(107,76,59,0.15);
+    color: var(--brown-light); padding: 10px 14px; border-radius: 10px;
+    font-family: 'DM Sans', sans-serif; font-size: 12px; cursor: pointer; transition: all 0.15s;
+  }
+  .btn-reset:hover { border-color: var(--accent); color: var(--accent); }
+
+  .config-status { font-size: 12px; display: flex; align-items: center; gap: 5px; margin-top: 8px; }
+  .config-status.ok { color: var(--green); font-weight: 500; }
+  .config-status.warn { color: #C0392B; }
+
+  .btn-toggle-config {
+    background: none; border: none; font-size: 11px; color: var(--brown-light);
+    cursor: pointer; text-decoration: underline; padding: 0; margin-left: auto;
+  }
+  .btn-toggle-config:hover { color: var(--accent); }
+
+  /* Connected summary */
+  .connected-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .connected-info { font-size: 13px; color: var(--green); font-weight: 500; display: flex; align-items: center; gap: 6px; }
+  .connected-detail { font-size: 11px; color: var(--brown-light); margin-top: 2px; font-family: monospace; }
 
   /* Search */
   .search-area { animation: fadeDown 0.6s 0.1s ease both; }
-
   .search-box {
     display: flex;
     border-radius: 14px;
@@ -108,364 +143,175 @@
     border: 1.5px solid rgba(107,76,59,0.15);
     transition: box-shadow 0.2s, border-color 0.2s;
   }
-
-  .search-box:focus-within {
-    box-shadow: 0 6px 32px var(--shadow), 0 0 0 3px rgba(200,86,58,0.12);
-    border-color: rgba(200,86,58,0.4);
-  }
-
-  .search-icon {
-    display: flex;
-    align-items: center;
-    padding: 0 18px;
-    color: var(--brown-light);
-    font-size: 18px;
-    flex-shrink: 0;
-  }
-
+  .search-box:focus-within { box-shadow: 0 6px 32px var(--shadow), 0 0 0 3px rgba(200,86,58,0.12); border-color: rgba(200,86,58,0.4); }
+  .search-icon { display: flex; align-items: center; padding: 0 18px; color: var(--brown-light); font-size: 18px; flex-shrink: 0; }
   #searchInput {
-    flex: 1;
-    border: none;
-    outline: none;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 16px;
-    color: var(--brown);
-    background: transparent;
-    padding: 16px 0;
+    flex: 1; border: none; outline: none;
+    font-family: 'DM Sans', sans-serif; font-size: 16px; color: var(--brown);
+    background: transparent; padding: 16px 0;
   }
-
   #searchInput::placeholder { color: var(--brown-light); opacity: 0.6; }
-
   #searchBtn {
-    background: var(--accent);
-    color: white;
-    border: none;
-    padding: 0 28px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    letter-spacing: 0.04em;
-    transition: background 0.2s, transform 0.1s;
-    flex-shrink: 0;
+    background: var(--accent); color: white; border: none; padding: 0 28px;
+    font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500;
+    cursor: pointer; letter-spacing: 0.04em; transition: background 0.2s; flex-shrink: 0;
   }
   #searchBtn:hover { background: #B34A30; }
-  #searchBtn:active { transform: scale(0.98); }
 
-  .search-tips {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-top: 12px;
-    align-items: center;
-  }
-
-  .tip-label {
-    font-size: 11px;
-    color: var(--brown-light);
-    font-weight: 500;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-
+  .search-tips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; align-items: center; }
+  .tip-label { font-size: 11px; color: var(--brown-light); font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; }
   .tag {
-    font-size: 11px;
-    padding: 4px 10px;
-    border-radius: 20px;
-    background: var(--cream-dark);
-    color: var(--brown-mid);
-    cursor: pointer;
-    border: 1px solid rgba(107,76,59,0.12);
-    transition: all 0.15s;
-    font-weight: 500;
+    font-size: 11px; padding: 4px 10px; border-radius: 20px;
+    background: var(--cream-dark); color: var(--brown-mid);
+    cursor: pointer; border: 1px solid rgba(107,76,59,0.12);
+    transition: all 0.15s; font-weight: 500;
   }
   .tag:hover { background: var(--brown-light); color: white; border-color: transparent; }
 
   /* State */
-  #stateMsg {
-    text-align: center;
-    padding: 48px 24px;
-    color: var(--brown-light);
-    animation: fadeIn 0.4s ease;
-  }
+  #stateMsg { text-align: center; padding: 48px 24px; color: var(--brown-light); }
   .state-icon { font-size: 40px; margin-bottom: 12px; display: block; }
   .state-text { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--brown); margin-bottom: 6px; }
   .state-sub { font-size: 13px; opacity: 0.7; }
-
-  .loading-dots span {
-    display: inline-block;
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--accent);
-    margin: 0 3px;
-    animation: bounce 1.2s infinite ease;
-  }
+  .loading-dots span { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); margin: 0 3px; animation: bounce 1.2s infinite ease; }
   .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
   .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
 
   /* Results */
-  #results {
-    margin-top: 32px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 16px;
-  }
+  #results { margin-top: 32px; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+  .results-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; padding: 0 2px; }
+  .results-count { font-size: 13px; color: var(--brown-light); }
+  .results-count strong { color: var(--brown); font-weight: 600; }
 
   .book-card {
-    background: white;
-    border-radius: 16px;
-    overflow: hidden;
-    display: flex;
-    border: 1.5px solid rgba(107,76,59,0.08);
-    box-shadow: 0 2px 12px var(--shadow);
-    transition: transform 0.2s, box-shadow 0.2s;
-    animation: fadeUp 0.4s ease both;
+    background: white; border-radius: 16px; overflow: hidden; display: flex;
+    border: 1.5px solid rgba(107,76,59,0.08); box-shadow: 0 2px 12px var(--shadow);
+    transition: transform 0.2s, box-shadow 0.2s; animation: fadeUp 0.4s ease both;
   }
-  .book-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 32px var(--shadow);
-  }
+  .book-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px var(--shadow); }
 
-  .cover-wrap {
-    width: 90px;
-    flex-shrink: 0;
-    background: var(--cream-dark);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-  }
+  .cover-wrap { width: 90px; flex-shrink: 0; background: var(--cream-dark); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
   .cover-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .cover-placeholder { font-size: 28px; opacity: 0.5; }
-  .cover-wrap::after {
-    content: '';
-    position: absolute;
-    right: 0; top: 0; bottom: 0;
-    width: 3px;
-    background: linear-gradient(to bottom, var(--accent), var(--gold));
-    opacity: 0.4;
-  }
+  .cover-wrap::after { content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(to bottom, var(--accent), var(--gold)); opacity: 0.4; }
 
-  .card-body { flex: 1; padding: 16px 18px; min-width: 0; }
-
-  .card-genre {
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 4px;
-  }
-
-  .card-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--brown);
-    line-height: 1.3;
-    margin-bottom: 2px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .card-author {
-    font-size: 12px;
-    color: var(--brown-light);
-    margin-bottom: 8px;
-    font-style: italic;
-  }
-
-  .card-meta {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-bottom: 10px;
-  }
-
-  .meta-pill {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 11px;
-    color: var(--brown-mid);
-    background: var(--cream);
-    padding: 3px 8px;
-    border-radius: 20px;
-    border: 1px solid rgba(107,76,59,0.1);
-  }
-
-  .card-description {
-    font-size: 12px;
-    color: var(--brown-mid);
-    line-height: 1.5;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-    margin-bottom: 0;
-  }
-  .book-card.expanded .card-description {
-    max-height: 200px;
-    margin-bottom: 12px;
-  }
+  .card-body { flex: 1; padding: 14px 16px; min-width: 0; }
+  .card-genre { font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
+  .card-title { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; color: var(--brown); line-height: 1.3; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .card-author { font-size: 12px; color: var(--brown-light); margin-bottom: 8px; font-style: italic; }
+  .card-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+  .meta-pill { display: flex; align-items: center; gap: 4px; font-size: 11px; color: var(--brown-mid); background: var(--cream); padding: 3px 8px; border-radius: 20px; border: 1px solid rgba(107,76,59,0.1); }
+  .card-description { font-size: 12px; color: var(--brown-mid); line-height: 1.5; max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+  .book-card.expanded .card-description { max-height: 200px; margin-bottom: 10px; }
 
   .card-actions { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
-
-  .btn {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 11px;
-    font-weight: 600;
-    padding: 6px 12px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    transition: all 0.15s;
-    font-family: 'DM Sans', sans-serif;
-    letter-spacing: 0.02em;
-    white-space: nowrap;
-  }
-
-  .btn-notion {
-    background: var(--brown);
-    color: white;
-    flex: 1;
-  }
+  .btn { display: flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; padding: 6px 12px; border-radius: 8px; border: none; cursor: pointer; transition: all 0.15s; font-family: 'DM Sans', sans-serif; white-space: nowrap; }
+  .btn-notion { background: var(--brown); color: white; flex: 1; justify-content: center; }
   .btn-notion:hover { background: #2A1E15; }
   .btn-notion:disabled { opacity: 0.6; cursor: not-allowed; }
-
-  .btn-copy {
-    background: var(--cream-dark);
-    color: var(--brown-mid);
-    border: 1px solid rgba(107,76,59,0.12);
-  }
+  .btn-copy { background: var(--cream-dark); color: var(--brown-mid); border: 1px solid rgba(107,76,59,0.12); }
   .btn-copy:hover { background: var(--cream); }
-
-  .btn-expand {
-    margin-left: auto;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--brown-light);
-    font-size: 14px;
-    padding: 4px 6px;
-    border-radius: 6px;
-    transition: background 0.15s;
-  }
+  .btn-expand { margin-left: auto; background: none; border: none; cursor: pointer; color: var(--brown-light); font-size: 14px; padding: 4px 6px; border-radius: 6px; }
   .btn-expand:hover { background: var(--cream); }
-
   .btn.success { background: var(--green) !important; color: white !important; }
   .btn.error-state { background: #C0392B !important; color: white !important; }
 
   /* Toast */
-  .toast {
-    position: fixed;
-    bottom: 24px;
-    left: 50%;
-    transform: translateX(-50%) translateY(80px);
-    color: white;
-    padding: 12px 20px;
-    border-radius: 40px;
-    font-size: 13px;
-    font-weight: 500;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-    z-index: 100;
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    pointer-events: none;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); color: white; padding: 12px 20px; border-radius: 40px; font-size: 13px; font-weight: 500; box-shadow: 0 8px 32px rgba(0,0,0,0.2); z-index: 100; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); pointer-events: none; }
   .toast.show { transform: translateX(-50%) translateY(0); }
   .toast.success { background: var(--green); }
   .toast.error { background: #C0392B; }
   .toast.info { background: var(--brown); }
 
-  /* Results header */
-  .results-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 16px;
-    padding: 0 2px;
-  }
-  .results-count { font-size: 13px; color: var(--brown-light); }
-  .results-count strong { color: var(--brown); font-weight: 600; }
-
   /* How-to */
-  .how-to {
-    background: white;
-    border: 1.5px solid rgba(107,76,59,0.1);
-    border-radius: 14px;
-    padding: 18px 20px;
-    margin-top: 32px;
-    animation: fadeUp 0.5s 0.3s ease both;
-  }
-  .how-to-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 14px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: var(--brown);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .how-to ol {
-    padding-left: 18px;
-    font-size: 13px;
-    color: var(--brown-mid);
-    line-height: 1.8;
-  }
+  .how-to { background: white; border: 1.5px solid rgba(107,76,59,0.1); border-radius: 14px; padding: 18px 20px; margin-top: 32px; animation: fadeUp 0.5s 0.3s ease both; }
+  .how-to-title { font-family: 'Playfair Display', serif; font-size: 14px; font-weight: 700; margin-bottom: 10px; color: var(--brown); }
+  .how-to ol { padding-left: 18px; font-size: 13px; color: var(--brown-mid); line-height: 1.8; }
   .how-to ol li strong { color: var(--brown); }
 
   /* Animations */
-  @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-16px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  @keyframes bounce {
-    0%, 80%, 100% { transform: translateY(0); }
-    40% { transform: translateY(-8px); }
-  }
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes bounce { 0%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-8px); } }
 
   .book-card:nth-child(1) { animation-delay: 0.05s; }
-  .book-card:nth-child(2) { animation-delay: 0.1s; }
+  .book-card:nth-child(2) { animation-delay: 0.10s; }
   .book-card:nth-child(3) { animation-delay: 0.15s; }
-  .book-card:nth-child(4) { animation-delay: 0.2s; }
+  .book-card:nth-child(4) { animation-delay: 0.20s; }
   .book-card:nth-child(5) { animation-delay: 0.25s; }
-  .book-card:nth-child(6) { animation-delay: 0.3s; }
 
-  @media (max-width: 500px) {
-    #results { grid-template-columns: 1fr; }
-    h1 { font-size: 26px; }
-  }
+  @media (max-width: 500px) { #results { grid-template-columns: 1fr; } h1 { font-size: 24px; } }
 </style>
 </head>
 <body>
-
 <div class="wrapper">
+
   <header>
     <p class="logo">📚 La Boîte à Livres</p>
     <h1>Trouve ton <em>prochain</em> livre</h1>
-    <p class="subtitle">Recherche un titre, un auteur ou un ISBN — et ajoute-le directement dans ta bibliothèque Notion ✨</p>
+    <p class="subtitle">Recherche un titre, un auteur ou un ISBN — ajoute-le directement dans ton Notion ✨</p>
   </header>
 
-  <!-- Banner shown if VERCEL_URL is not configured -->
-  <div class="config-banner" id="configBanner">
-    ⚙️ <span>Pour activer l'ajout automatique dans Notion, configure ton URL Vercel dans le fichier HTML. <a href="#how-to">Comment faire ?</a></span>
+  <!-- ── Config Panel ── -->
+  <div class="config-panel" id="configPanel">
+    <div id="configForm">
+      <div class="config-header">
+        <p class="config-title">⚙️ Connexion à ton Notion</p>
+      </div>
+      <p class="config-subtitle">
+        Configure une seule fois — tes infos restent dans ton navigateur, personne d'autre n'y a accès.<br>
+        👉 Crée ton intégration sur <a href="https://www.notion.so/my-integrations" target="_blank">notion.so/my-integrations</a>
+      </p>
+      <div class="config-fields">
+        <div class="config-field">
+          <label>🔑 Token Notion (Internal Integration Secret)</label>
+          <input type="password" id="inputToken" placeholder="secret_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" autocomplete="off">
+        </div>
+        <div class="config-field">
+          <label>🗄️ Database ID (ID de ta bibliothèque Notion)</label>
+          <input type="text" id="inputDbId" placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" autocomplete="off">
+        </div>
+      </div>
+      <div class="config-actions">
+        <button class="btn-save" onclick="saveConfig()">✅ Connecter mon Notion</button>
+        <button class="btn-reset" onclick="showHelp()">❓ Comment trouver ces infos ?</button>
+      </div>
+      <p class="config-status warn" id="configStatus" style="display:none"></p>
+    </div>
+
+    <div id="configConnected" style="display:none">
+      <div class="connected-summary">
+        <div>
+          <p class="connected-info">✅ Notion connecté !</p>
+          <p class="connected-detail" id="connectedDbId"></p>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn-toggle-config" onclick="editConfig()">✏️ Modifier</button>
+          <button class="btn-reset" onclick="resetConfig()">🔌 Déconnecter</button>
+        </div>
+      </div>
+    </div>
   </div>
 
+  <!-- Help modal -->
+  <div id="helpBox" style="display:none;background:white;border:1.5px solid rgba(107,76,59,0.12);border-radius:14px;padding:20px;margin-bottom:20px;animation:fadeDown 0.3s ease both">
+    <p style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;margin-bottom:10px">📖 Comment trouver tes infos Notion</p>
+    <p style="font-size:13px;color:var(--brown-mid);margin-bottom:8px"><strong>1. Ton Token Notion :</strong></p>
+    <ol style="font-size:12px;color:var(--brown-mid);padding-left:18px;line-height:1.8;margin-bottom:12px">
+      <li>Va sur <a href="https://www.notion.so/my-integrations" target="_blank" style="color:var(--accent)">notion.so/my-integrations</a></li>
+      <li>Clique sur ton intégration <strong>"Boîte à Livres API"</strong></li>
+      <li>Copie le <strong>"Internal Integration Secret"</strong> (commence par <code>secret_...</code>)</li>
+    </ol>
+    <p style="font-size:13px;color:var(--brown-mid);margin-bottom:8px"><strong>2. Ton Database ID :</strong></p>
+    <ol style="font-size:12px;color:var(--brown-mid);padding-left:18px;line-height:1.8;margin-bottom:12px">
+      <li>Ouvre ta base de données <strong>"Ma Bibliothèque Personnelle"</strong> dans Notion</li>
+      <li>Copie l'URL — elle ressemble à :<br><code style="font-size:11px">notion.so/workspace/<strong>xxxxxxxx...xxxxxxxx</strong>?v=...</code></li>
+      <li>Le Database ID c'est la partie en gras ci-dessus (32 caractères)</li>
+    </ol>
+    <button onclick="document.getElementById('helpBox').style.display='none'" style="background:var(--accent);color:white;border:none;padding:8px 16px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer">Fermer</button>
+  </div>
+
+  <!-- Search -->
   <div class="search-area">
     <div class="search-box">
       <div class="search-icon">🔍</div>
@@ -474,10 +320,10 @@
     </div>
     <div class="search-tips">
       <span class="tip-label">Essaie :</span>
-      <span class="tag" onclick="search('le petit prince')">Le Petit Prince</span>
-      <span class="tag" onclick="search('Atomic Habits')">Atomic Habits</span>
-      <span class="tag" onclick="search('Dune Frank Herbert')">Dune</span>
-      <span class="tag" onclick="search('développement personnel')">Développement perso</span>
+      <span class="tag" onclick="doSearch('le petit prince')">Le Petit Prince</span>
+      <span class="tag" onclick="doSearch('Atomic Habits')">Atomic Habits</span>
+      <span class="tag" onclick="doSearch('Dune Frank Herbert')">Dune</span>
+      <span class="tag" onclick="doSearch('développement personnel')">Développement perso</span>
     </div>
   </div>
 
@@ -494,235 +340,293 @@
     <div id="results"></div>
   </div>
 
-  <div class="how-to" id="how-to">
+  <div class="how-to">
     <p class="how-to-title">💡 Comment utiliser cet outil ?</p>
     <ol>
+      <li>Configure ta connexion Notion <strong>une seule fois</strong> en haut</li>
       <li>Recherche un livre par <strong>titre, auteur ou ISBN</strong></li>
-      <li>Clique sur <strong>"+ Ajouter à Notion"</strong> pour l'envoyer directement dans ta bibliothèque</li>
-      <li>Le livre apparaît automatiquement avec le statut <strong>"À lire"</strong></li>
-      <li>Tu n'as plus qu'à ouvrir Notion pour le retrouver ! 🎉</li>
+      <li>Clique <strong>"📚 Ajouter à Notion"</strong> — le livre apparaît dans ta bibliothèque !</li>
+      <li>Tes infos de connexion sont <strong>sauvegardées dans ton navigateur</strong> 🔒</li>
     </ol>
   </div>
+
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-  // ─── CONFIGURATION ───────────────────────────────────────────────
-  // Remplace cette URL par l'URL de ton backend Vercel après déploiement
-  // Exemple : https://boite-a-livres-api.vercel.app/api/add-book
-  const VERCEL_API_URL = 'REMPLACE_PAR_TON_URL_VERCEL/api/add-book';
-  // ─────────────────────────────────────────────────────────────────
+// ─── Storage ─────────────────────────────────────────────────────────────────
+const STORAGE_TOKEN = 'boite_notion_token';
+const STORAGE_DB    = 'boite_notion_db_id';
 
-  const isConfigured = !VERCEL_API_URL.includes('REMPLACE_PAR');
-  if (isConfigured) document.getElementById('configBanner').classList.add('hidden');
+function getConfig() {
+  return {
+    token: localStorage.getItem(STORAGE_TOKEN) || '',
+    dbId:  localStorage.getItem(STORAGE_DB)    || '',
+  };
+}
 
-  const input = document.getElementById('searchInput');
-  const btn = document.getElementById('searchBtn');
-  const stateMsg = document.getElementById('stateMsg');
-  const resultsWrap = document.getElementById('resultsWrap');
-  const resultsEl = document.getElementById('results');
-  const resultsCount = document.getElementById('resultsCount');
-  const toast = document.getElementById('toast');
+function saveConfig() {
+  const token = document.getElementById('inputToken').value.trim();
+  const dbId  = document.getElementById('inputDbId').value.trim().replace(/-/g, '');
+  const status = document.getElementById('configStatus');
 
-  // Genre detection — ordered from most specific to least specific
-  // Uses exact word boundaries to avoid false matches (e.g. "fiction" matching "science fiction" before "fantasy")
-  const genreRules = [
-    { keywords: ['science fiction', 'sci-fi', 'scifi'], genre: '🚀 Science-Fiction' },
-    { keywords: ['fantasy', 'fantaisie', 'fantastique', 'magic', 'dragons', 'sorcery'], genre: '🐉 Fantaisie' },
-    { keywords: ['thriller', 'suspense'], genre: '🔪 Thrillers' },
-    { keywords: ['mystery', 'detective', 'crime', 'policier', 'polar'], genre: '🚨 Policiers' },
-    { keywords: ['romance', 'love story', 'amour'], genre: '💖 Romance' },
-    { keywords: ['comics', 'manga', 'graphic novel', 'bande dessinée', 'bd'], genre: '🎨 BD / Manga / Roman graphique' },
-    { keywords: ['biography', 'biographie', 'autobiography', 'memoir', 'témoignage'], genre: '✍️ Biographie & Témoignage' },
-    { keywords: ['history', 'histoire', 'historical', 'society', 'sociologie'], genre: '🌍 Histoire & Société' },
-    { keywords: ['self-help', 'personal development', 'développement personnel', 'motivation'], genre: '🧠 Développement Personnel' },
-    { keywords: ['business', 'entrepreneurship', 'entrepreneuriat', 'startup', 'management'], genre: '💡 Entrepreneuriat & Business' },
-    { keywords: ['computers', 'programming', 'software', 'technology', 'informatique'], genre: '🛠️ Bureautique & Tech' },
-    { keywords: ['design', 'graphisme', 'graphic design', 'typography'], genre: '🖼️ Design & Graphisme' },
-    { keywords: ['marketing', 'advertising', 'publicité', 'sales', 'vente'], genre: '📢 Marketing & Vente' },
-    { keywords: ['travel', 'voyage', 'adventure', 'aventure', 'exploration'], genre: '✈️ Voyage & Aventure' },
-    { keywords: ['health', 'wellness', 'bien-être', 'mindfulness', 'yoga', 'meditation'], genre: '🧘Bien-être' },
-    { keywords: ['psychology', 'psychologie', 'neuroscience'], genre: '🧠 Développement Personnel' },
-    { keywords: ['education', 'pédagogie', 'teaching', 'learning', 'formation'], genre: '🏫 Pédagogie & Formation' },
-    { keywords: ['productivity', 'organisation', 'habits', 'time management'], genre: '📈 Productivité & Organisation' },
-    { keywords: ['philosophy', 'philosophie', 'classic', 'classique', 'literary fiction'], genre: '🎭 Classiques' },
-  ];
+  if (!token.startsWith('secret_')) {
+    status.textContent = '⚠️ Le token doit commencer par "secret_"';
+    status.className = 'config-status warn';
+    status.style.display = 'flex';
+    return;
+  }
+  if (dbId.length !== 32) {
+    status.textContent = '⚠️ Le Database ID doit faire 32 caractères (sans les tirets)';
+    status.className = 'config-status warn';
+    status.style.display = 'flex';
+    return;
+  }
 
-  function guessGenre(categories) {
-    if (!categories?.length) return null;
-    const raw = categories.join(' ').toLowerCase();
-    for (const rule of genreRules) {
-      for (const kw of rule.keywords) {
-        // Match exact keyword (with word boundaries)
-        if (raw.includes(kw)) return rule.genre;
-      }
+  localStorage.setItem(STORAGE_TOKEN, token);
+  localStorage.setItem(STORAGE_DB, dbId);
+  showConnectedState();
+  showToast('✅ Notion connecté avec succès !', 'success');
+}
+
+function resetConfig() {
+  if (!confirm('Déconnecter ton Notion ? Tu devras re-saisir tes infos.')) return;
+  localStorage.removeItem(STORAGE_TOKEN);
+  localStorage.removeItem(STORAGE_DB);
+  showFormState();
+}
+
+function editConfig() {
+  const { token, dbId } = getConfig();
+  document.getElementById('inputToken').value = token;
+  document.getElementById('inputDbId').value = dbId;
+  showFormState(false);
+}
+
+function showConnectedState() {
+  const { dbId } = getConfig();
+  document.getElementById('configPanel').classList.add('connected');
+  document.getElementById('configForm').style.display = 'none';
+  document.getElementById('configConnected').style.display = 'block';
+  document.getElementById('connectedDbId').textContent = 'DB : ' + dbId.slice(0, 8) + '••••••••' + dbId.slice(-4);
+}
+
+function showFormState(clear = true) {
+  document.getElementById('configPanel').classList.remove('connected');
+  document.getElementById('configForm').style.display = 'block';
+  document.getElementById('configConnected').style.display = 'none';
+  document.getElementById('configStatus').style.display = 'none';
+  if (clear) {
+    document.getElementById('inputToken').value = '';
+    document.getElementById('inputDbId').value = '';
+  }
+}
+
+function showHelp() {
+  const box = document.getElementById('helpBox');
+  box.style.display = box.style.display === 'none' ? 'block' : 'none';
+}
+
+// Init on load
+window.addEventListener('load', () => {
+  const { token, dbId } = getConfig();
+  if (token && dbId) showConnectedState();
+});
+
+// ─── Genre detection ──────────────────────────────────────────────────────────
+const genreRules = [
+  { keywords: ['science fiction', 'sci-fi', 'scifi'],               genre: '🚀 Science-Fiction' },
+  { keywords: ['fantasy', 'fantaisie', 'fantastique', 'magic'],     genre: '🐉 Fantaisie' },
+  { keywords: ['thriller', 'suspense'],                              genre: '🔪 Thrillers' },
+  { keywords: ['mystery', 'detective', 'crime', 'policier','polar'],genre: '🚨 Policiers' },
+  { keywords: ['romance', 'love story', 'amour'],                   genre: '💖 Romance' },
+  { keywords: ['comics', 'manga', 'graphic novel', 'bande dessin'], genre: '🎨 BD / Manga / Roman graphique' },
+  { keywords: ['biography', 'autobio', 'memoir', 'témoignage'],     genre: '✍️ Biographie & Témoignage' },
+  { keywords: ['history', 'histoire', 'historical', 'society'],     genre: '🌍 Histoire & Société' },
+  { keywords: ['self-help', 'personal development', 'motivation'],  genre: '🧠 Développement Personnel' },
+  { keywords: ['business', 'entrepreneurship', 'startup'],          genre: '💡 Entrepreneuriat & Business' },
+  { keywords: ['computers', 'programming', 'software', 'tech'],     genre: '🛠️ Bureautique & Tech' },
+  { keywords: ['design', 'graphisme', 'typography'],                genre: '🖼️ Design & Graphisme' },
+  { keywords: ['marketing', 'advertising', 'sales', 'vente'],       genre: '📢 Marketing & Vente' },
+  { keywords: ['travel', 'voyage', 'adventure', 'aventure'],        genre: '✈️ Voyage & Aventure' },
+  { keywords: ['health', 'wellness', 'bien-être', 'yoga'],          genre: '🧘Bien-être' },
+  { keywords: ['psychology', 'psychologie', 'neuroscience'],        genre: '🧠 Développement Personnel' },
+  { keywords: ['education', 'pédagogie', 'formation'],              genre: '🏫 Pédagogie & Formation' },
+  { keywords: ['productivity', 'organisation', 'habits'],           genre: '📈 Productivité & Organisation' },
+  { keywords: ['philosophy', 'classic', 'classique', 'literary'],   genre: '🎭 Classiques' },
+];
+
+function guessGenre(categories) {
+  if (!categories?.length) return null;
+  const raw = categories.join(' ').toLowerCase();
+  for (const rule of genreRules) {
+    for (const kw of rule.keywords) {
+      if (raw.includes(kw)) return rule.genre;
     }
-    return null;
+  }
+  return null;
+}
+
+// ─── Toast ────────────────────────────────────────────────────────────────────
+const toast = document.getElementById('toast');
+function showToast(msg, type = 'info') {
+  toast.textContent = msg;
+  toast.className = `toast ${type} show`;
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// ─── Add to Notion ────────────────────────────────────────────────────────────
+async function addToNotion(bookData, btn) {
+  const { token, dbId } = getConfig();
+
+  if (!token || !dbId) {
+    showToast('⚙️ Configure d\'abord ta connexion Notion en haut !', 'error');
+    document.getElementById('configPanel').scrollIntoView({ behavior: 'smooth' });
+    return;
   }
 
-  function showToast(msg, type = 'info') {
-    toast.textContent = msg;
-    toast.className = `toast ${type} show`;
-    setTimeout(() => toast.classList.remove('show'), 3000);
-  }
+  const orig = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '⏳ Ajout…';
 
-  function copyText(text, btn) {
-    navigator.clipboard.writeText(text).then(() => {
-      const orig = btn.innerHTML;
-      btn.innerHTML = '✓ Copié';
-      btn.classList.add('success');
-      setTimeout(() => { btn.innerHTML = orig; btn.classList.remove('success'); }, 2000);
+  // Build Notion API payload
+  const properties = {
+    Titre: { title: [{ text: { content: bookData.titre } }] },
+    État: { status: { name: 'À lire' } },
+  };
+
+  if (bookData.auteur) properties['Auteur'] = { rich_text: [{ text: { content: bookData.auteur } }] };
+  if (bookData.pages)  properties['Pages totales'] = { number: parseInt(bookData.pages) };
+  if (bookData.genre)  properties['Genre'] = { select: { name: bookData.genre } };
+  if (bookData.couverture) properties['Couverture'] = { url: bookData.couverture };
+
+  const body = { parent: { database_id: dbId }, properties };
+  if (bookData.couverture) body.cover = { type: 'external', external: { url: bookData.couverture } };
+
+  try {
+    const res = await fetch('https://api.notion.com/v1/pages', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        'Notion-Version': '2022-06-28',
+      },
+      body: JSON.stringify(body),
     });
-  }
 
-  async function addToNotion(bookData, btn) {
-    if (!isConfigured) {
-      showToast('⚙️ Configure d\'abord ton URL Vercel dans le HTML', 'error');
+    const data = await res.json();
+
+    if (res.ok) {
+      btn.innerHTML = '✅ Ajouté !';
+      btn.classList.add('success');
+      btn.disabled = true;
+      showToast(`✅ "${bookData.titre}" ajouté à ta bibliothèque !`, 'success');
+    } else {
+      throw new Error(data.message || 'Erreur Notion API');
+    }
+  } catch (err) {
+    btn.innerHTML = '❌ Erreur';
+    btn.classList.add('error-state');
+    btn.disabled = false;
+    showToast('❌ ' + err.message, 'error');
+    setTimeout(() => { btn.innerHTML = orig; btn.classList.remove('error-state'); }, 3000);
+  }
+}
+
+// ─── Build card ───────────────────────────────────────────────────────────────
+function buildCard(book, idx) {
+  const info  = book.volumeInfo || {};
+  const titre = info.title || 'Titre inconnu';
+  const auteur = info.authors ? info.authors.join(', ') : 'Auteur inconnu';
+  const pages = info.pageCount || null;
+  const year  = info.publishedDate ? info.publishedDate.slice(0, 4) : '—';
+  const genre = guessGenre(info.categories) || null;
+  const desc  = info.description ? info.description.slice(0, 280) + (info.description.length > 280 ? '…' : '') : 'Aucun résumé disponible.';
+  const coverUrl = info.imageLinks ? (info.imageLinks.thumbnail || info.imageLinks.smallThumbnail) : null;
+  const coverHttps = coverUrl ? coverUrl.replace('http://', 'https://') : null;
+
+  const bookData = { titre, auteur, pages: pages ? String(pages) : null, genre, couverture: coverHttps };
+
+  const card = document.createElement('div');
+  card.className = 'book-card';
+  card.style.animationDelay = (idx * 0.06) + 's';
+  card.innerHTML = `
+    <div class="cover-wrap">
+      ${coverHttps ? `<img src="${coverHttps}" alt="Couverture" loading="lazy">` : '<span class="cover-placeholder">📚</span>'}
+    </div>
+    <div class="card-body">
+      ${genre ? `<p class="card-genre">${genre}</p>` : ''}
+      <p class="card-title" title="${titre}">${titre}</p>
+      <p class="card-author">par ${auteur}</p>
+      <div class="card-meta">
+        ${pages ? `<span class="meta-pill">📄 ${pages} pages</span>` : ''}
+        ${year !== '—' ? `<span class="meta-pill">📅 ${year}</span>` : ''}
+      </div>
+      <div class="card-description">${desc}</div>
+      <div class="card-actions">
+        <button class="btn btn-notion">📚 Ajouter à Notion</button>
+        <button class="btn btn-copy" data-copy="${titre.replace(/"/g,'&quot;')}">Copier</button>
+        <button class="btn-expand" onclick="toggleExpand(this)">▾</button>
+      </div>
+    </div>
+  `;
+
+  card.querySelector('.btn-notion').addEventListener('click', function() { addToNotion(bookData, this); });
+  card.querySelector('.btn-copy').addEventListener('click', function() {
+    navigator.clipboard.writeText(this.dataset.copy).then(() => {
+      const o = this.innerHTML; this.innerHTML = '✓'; setTimeout(() => this.innerHTML = o, 1500);
+    });
+  });
+  card.addEventListener('click', e => { if (e.target.tagName === 'BUTTON') return; toggleCard(card); });
+  return card;
+}
+
+function toggleExpand(btn) { toggleCard(btn.closest('.book-card')); }
+function toggleCard(card) {
+  card.classList.toggle('expanded');
+  const btn = card.querySelector('.btn-expand');
+  if (btn) btn.textContent = card.classList.contains('expanded') ? '▴' : '▾';
+}
+
+// ─── Search ───────────────────────────────────────────────────────────────────
+const searchInput = document.getElementById('searchInput');
+const stateMsg    = document.getElementById('stateMsg');
+const resultsWrap = document.getElementById('resultsWrap');
+const resultsEl   = document.getElementById('results');
+const resultsCount = document.getElementById('resultsCount');
+
+async function doSearch(query) {
+  if (!query) query = searchInput.value.trim();
+  if (!query) return;
+  searchInput.value = query;
+
+  stateMsg.innerHTML = `<div class="loading-dots"><span></span><span></span><span></span></div><p class="state-text" style="margin-top:12px">Recherche en cours…</p>`;
+  stateMsg.style.display = 'block';
+  resultsWrap.style.display = 'none';
+  resultsEl.innerHTML = '';
+
+  try {
+    const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=10&printType=books`;
+    const res  = await fetch(url);
+    const data = await res.json();
+
+    if (!data.items?.length) {
+      stateMsg.innerHTML = `<span class="state-icon">😔</span><p class="state-text">Aucun résultat trouvé</p><p class="state-sub">Essaie un autre titre ou l'ISBN</p>`;
       return;
     }
 
-    const orig = btn.innerHTML;
-    btn.disabled = true;
-    btn.innerHTML = '⏳ Ajout en cours…';
-
-    try {
-      const res = await fetch(VERCEL_API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(bookData),
-      });
-
-      const data = await res.json();
-
-      if (res.ok && data.success) {
-        btn.innerHTML = '✅ Ajouté !';
-        btn.classList.add('success');
-        btn.disabled = true;
-        showToast(`✅ "${bookData.titre}" ajouté à ta bibliothèque !`, 'success');
-      } else {
-        throw new Error(data.error || 'Erreur inconnue');
-      }
-    } catch (err) {
-      btn.innerHTML = '❌ Erreur';
-      btn.classList.add('error-state');
-      btn.disabled = false;
-      showToast('❌ ' + err.message, 'error');
-      setTimeout(() => {
-        btn.innerHTML = orig;
-        btn.classList.remove('error-state');
-      }, 3000);
-    }
+    stateMsg.style.display = 'none';
+    resultsWrap.style.display = 'block';
+    resultsCount.innerHTML = `<strong>${data.items.length}</strong> résultats pour « ${query} »`;
+    data.items.forEach((book, i) => resultsEl.appendChild(buildCard(book, i)));
+  } catch {
+    stateMsg.innerHTML = `<span class="state-icon">⚠️</span><p class="state-text">Erreur de connexion</p><p class="state-sub">Vérifie ta connexion et réessaie</p>`;
   }
+}
 
-  function buildCard(book, idx) {
-    const info = book.volumeInfo || {};
-    const titre = info.title || 'Titre inconnu';
-    const auteur = info.authors ? info.authors.join(', ') : 'Auteur inconnu';
-    const pages = info.pageCount || null;
-    const year = info.publishedDate ? info.publishedDate.slice(0, 4) : '—';
-    const genre = guessGenre(info.categories) || null;
-    const desc = info.description ? info.description.slice(0, 280) + (info.description.length > 280 ? '…' : '') : 'Aucun résumé disponible.';
-    const coverUrl = info.imageLinks ? (info.imageLinks.thumbnail || info.imageLinks.smallThumbnail) : null;
-    const isbn = info.industryIdentifiers ? (info.industryIdentifiers.find(i => i.type === 'ISBN_13') || info.industryIdentifiers[0]) : null;
-
-    const bookData = {
-      titre,
-      auteur,
-      pages: pages ? String(pages) : null,
-      genre,
-      couverture: coverUrl ? coverUrl.replace('http://', 'https://') : null,
-      isbn: isbn?.identifier || null,
-    };
-
-    const card = document.createElement('div');
-    card.className = 'book-card';
-    card.style.animationDelay = (idx * 0.06) + 's';
-
-    card.innerHTML = `
-      <div class="cover-wrap">
-        ${coverUrl
-          ? `<img src="${coverUrl.replace('http://', 'https://')}" alt="Couverture" loading="lazy">`
-          : `<span class="cover-placeholder">📚</span>`}
-      </div>
-      <div class="card-body">
-        ${genre ? `<p class="card-genre">${genre}</p>` : ''}
-        <p class="card-title" title="${titre}">${titre}</p>
-        <p class="card-author">par ${auteur}</p>
-        <div class="card-meta">
-          ${pages ? `<span class="meta-pill">📄 ${pages} pages</span>` : ''}
-          ${year !== '—' ? `<span class="meta-pill">📅 ${year}</span>` : ''}
-          ${isbn ? `<span class="meta-pill">🔖 ISBN</span>` : ''}
-        </div>
-        <div class="card-description">${desc}</div>
-        <div class="card-actions">
-          <button class="btn btn-notion" data-book='${JSON.stringify(bookData).replace(/'/g, "&#39;")}'>
-            📚 Ajouter à Notion
-          </button>
-          <button class="btn btn-copy" onclick="copyText('${titre.replace(/'/g, "\\'")}', this)">Copier</button>
-          <button class="btn-expand" onclick="toggleExpand(this)">▾</button>
-        </div>
-      </div>
-    `;
-
-    // Bind Notion button
-    card.querySelector('.btn-notion').addEventListener('click', function() {
-      const data = JSON.parse(this.getAttribute('data-book'));
-      addToNotion(data, this);
-    });
-
-    return card;
-  }
-
-  function toggleExpand(btn) {
-    const card = btn.closest('.book-card');
-    card.classList.toggle('expanded');
-    btn.textContent = card.classList.contains('expanded') ? '▴' : '▾';
-  }
-
-  async function search(query) {
-    if (!query) query = input.value.trim();
-    if (!query) return;
-    input.value = query;
-
-    stateMsg.innerHTML = `
-      <div class="loading-dots"><span></span><span></span><span></span></div>
-      <p class="state-text" style="margin-top:12px">Recherche en cours…</p>
-    `;
-    stateMsg.style.display = 'block';
-    resultsWrap.style.display = 'none';
-    resultsEl.innerHTML = '';
-
-    try {
-      const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=10&printType=books`;
-      const res = await fetch(url);
-      const data = await res.json();
-
-      if (!data.items?.length) {
-        stateMsg.innerHTML = `
-          <span class="state-icon">😔</span>
-          <p class="state-text">Aucun résultat trouvé</p>
-          <p class="state-sub">Essaie un autre titre ou l'ISBN du livre</p>
-        `;
-        return;
-      }
-
-      stateMsg.style.display = 'none';
-      resultsWrap.style.display = 'block';
-      resultsCount.innerHTML = `<strong>${data.items.length}</strong> résultats pour « ${query} »`;
-      data.items.forEach((book, i) => resultsEl.appendChild(buildCard(book, i)));
-
-    } catch (err) {
-      stateMsg.innerHTML = `
-        <span class="state-icon">⚠️</span>
-        <p class="state-text">Erreur de connexion</p>
-        <p class="state-sub">Vérifie ta connexion internet et réessaie</p>
-      `;
-    }
-  }
-
-  btn.addEventListener('click', () => search(input.value.trim()));
-  input.addEventListener('keydown', e => { if (e.key === 'Enter') search(input.value.trim()); });
+document.getElementById('searchBtn').addEventListener('click', () => doSearch(searchInput.value.trim()));
+searchInput.addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(searchInput.value.trim()); });
 </script>
 </body>
 </html>
