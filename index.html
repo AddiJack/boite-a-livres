@@ -26,10 +26,8 @@
     font-family: 'DM Sans', sans-serif;
     color: var(--brown);
     min-height: 100vh;
-    padding: 0;
   }
 
-  /* Texture grain overlay */
   body::before {
     content: '';
     position: fixed;
@@ -48,7 +46,6 @@
     padding: 40px 24px 80px;
   }
 
-  /* Header */
   header {
     text-align: center;
     margin-bottom: 40px;
@@ -73,10 +70,7 @@
     margin-bottom: 8px;
   }
 
-  h1 em {
-    color: var(--accent);
-    font-style: italic;
-  }
+  h1 em { color: var(--accent); font-style: italic; }
 
   .subtitle {
     font-size: 14px;
@@ -84,30 +78,29 @@
     font-weight: 300;
   }
 
-  /* Divider */
-  .divider {
+  /* Config banner */
+  .config-banner {
+    background: #FFF8E7;
+    border: 1.5px solid var(--gold);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    font-size: 13px;
+    color: var(--brown-mid);
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin: 24px 0;
+    gap: 10px;
+    animation: fadeDown 0.5s ease both;
   }
-  .divider::before, .divider::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(to right, transparent, var(--brown-light), transparent);
-    opacity: 0.3;
-  }
-  .divider span { font-size: 16px; }
+  .config-banner.hidden { display: none; }
+  .config-banner a { color: var(--accent); font-weight: 600; text-decoration: none; }
+  .config-banner a:hover { text-decoration: underline; }
 
-  /* Search bar */
-  .search-area {
-    animation: fadeDown 0.6s 0.1s ease both;
-  }
+  /* Search */
+  .search-area { animation: fadeDown 0.6s 0.1s ease both; }
 
   .search-box {
     display: flex;
-    gap: 0;
     border-radius: 14px;
     overflow: hidden;
     box-shadow: 0 4px 24px var(--shadow), 0 1px 0 rgba(255,255,255,0.8) inset;
@@ -124,7 +117,6 @@
   .search-icon {
     display: flex;
     align-items: center;
-    justify-content: center;
     padding: 0 18px;
     color: var(--brown-light);
     font-size: 18px;
@@ -157,7 +149,6 @@
     transition: background 0.2s, transform 0.1s;
     flex-shrink: 0;
   }
-
   #searchBtn:hover { background: #B34A30; }
   #searchBtn:active { transform: scale(0.98); }
 
@@ -190,19 +181,17 @@
   }
   .tag:hover { background: var(--brown-light); color: white; border-color: transparent; }
 
-  /* State messages */
+  /* State */
   #stateMsg {
     text-align: center;
     padding: 48px 24px;
     color: var(--brown-light);
     animation: fadeIn 0.4s ease;
   }
-
   .state-icon { font-size: 40px; margin-bottom: 12px; display: block; }
   .state-text { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--brown); margin-bottom: 6px; }
   .state-sub { font-size: 13px; opacity: 0.7; }
 
-  /* Loading dots */
   .loading-dots span {
     display: inline-block;
     width: 8px; height: 8px;
@@ -214,7 +203,7 @@
   .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
   .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
 
-  /* Results grid */
+  /* Results */
   #results {
     margin-top: 32px;
     display: grid;
@@ -222,29 +211,21 @@
     gap: 16px;
   }
 
-  /* Book card */
   .book-card {
     background: white;
     border-radius: 16px;
     overflow: hidden;
     display: flex;
-    gap: 0;
     border: 1.5px solid rgba(107,76,59,0.08);
     box-shadow: 0 2px 12px var(--shadow);
     transition: transform 0.2s, box-shadow 0.2s;
     animation: fadeUp 0.4s ease both;
-    cursor: pointer;
   }
-
   .book-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 32px var(--shadow);
   }
 
-  .book-card.expanded .card-details { display: block; }
-  .book-card.expanded { cursor: default; }
-
-  /* Cover */
   .cover-wrap {
     width: 90px;
     flex-shrink: 0;
@@ -255,37 +236,18 @@
     position: relative;
     overflow: hidden;
   }
-
-  .cover-wrap img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .cover-placeholder {
-    font-size: 28px;
-    opacity: 0.5;
-  }
-
-  /* Spine accent */
+  .cover-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .cover-placeholder { font-size: 28px; opacity: 0.5; }
   .cover-wrap::after {
     content: '';
     position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
+    right: 0; top: 0; bottom: 0;
     width: 3px;
     background: linear-gradient(to bottom, var(--accent), var(--gold));
     opacity: 0.4;
   }
 
-  /* Card body */
-  .card-body {
-    flex: 1;
-    padding: 16px 18px;
-    min-width: 0;
-  }
+  .card-body { flex: 1; padding: 16px 18px; min-width: 0; }
 
   .card-genre {
     font-size: 10px;
@@ -317,7 +279,7 @@
 
   .card-meta {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     flex-wrap: wrap;
     margin-bottom: 10px;
   }
@@ -334,7 +296,6 @@
     border: 1px solid rgba(107,76,59,0.1);
   }
 
-  /* Description */
   .card-description {
     font-size: 12px;
     color: var(--brown-mid);
@@ -344,20 +305,14 @@
     transition: max-height 0.3s ease;
     margin-bottom: 0;
   }
-
   .book-card.expanded .card-description {
     max-height: 200px;
     margin-bottom: 12px;
   }
 
-  /* Copy button area */
-  .card-actions {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
+  .card-actions { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
 
-  .btn-copy {
+  .btn {
     display: flex;
     align-items: center;
     gap: 5px;
@@ -370,25 +325,23 @@
     transition: all 0.15s;
     font-family: 'DM Sans', sans-serif;
     letter-spacing: 0.02em;
+    white-space: nowrap;
   }
 
-  .btn-copy.primary {
-    background: var(--accent);
+  .btn-notion {
+    background: var(--brown);
     color: white;
+    flex: 1;
   }
-  .btn-copy.primary:hover { background: #B34A30; }
+  .btn-notion:hover { background: #2A1E15; }
+  .btn-notion:disabled { opacity: 0.6; cursor: not-allowed; }
 
-  .btn-copy.secondary {
+  .btn-copy {
     background: var(--cream-dark);
     color: var(--brown-mid);
     border: 1px solid rgba(107,76,59,0.12);
   }
-  .btn-copy.secondary:hover { background: var(--cream); }
-
-  .btn-copy.success {
-    background: var(--green) !important;
-    color: white !important;
-  }
+  .btn-copy:hover { background: var(--cream); }
 
   .btn-expand {
     margin-left: auto;
@@ -403,15 +356,17 @@
   }
   .btn-expand:hover { background: var(--cream); }
 
-  /* Copied toast */
+  .btn.success { background: var(--green) !important; color: white !important; }
+  .btn.error-state { background: #C0392B !important; color: white !important; }
+
+  /* Toast */
   .toast {
     position: fixed;
     bottom: 24px;
     left: 50%;
     transform: translateX(-50%) translateY(80px);
-    background: var(--brown);
     color: white;
-    padding: 12px 24px;
+    padding: 12px 20px;
     border-radius: 40px;
     font-size: 13px;
     font-weight: 500;
@@ -419,8 +374,14 @@
     z-index: 100;
     transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     pointer-events: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
   .toast.show { transform: translateX(-50%) translateY(0); }
+  .toast.success { background: var(--green); }
+  .toast.error { background: #C0392B; }
+  .toast.info { background: var(--brown); }
 
   /* Results header */
   .results-header {
@@ -430,18 +391,10 @@
     margin-bottom: 16px;
     padding: 0 2px;
   }
+  .results-count { font-size: 13px; color: var(--brown-light); }
+  .results-count strong { color: var(--brown); font-weight: 600; }
 
-  .results-count {
-    font-size: 13px;
-    color: var(--brown-light);
-  }
-
-  .results-count strong {
-    color: var(--brown);
-    font-weight: 600;
-  }
-
-  /* Instructions box */
+  /* How-to */
   .how-to {
     background: white;
     border: 1.5px solid rgba(107,76,59,0.1);
@@ -450,7 +403,6 @@
     margin-top: 32px;
     animation: fadeUp 0.5s 0.3s ease both;
   }
-
   .how-to-title {
     font-family: 'Playfair Display', serif;
     font-size: 14px;
@@ -461,14 +413,12 @@
     align-items: center;
     gap: 6px;
   }
-
   .how-to ol {
     padding-left: 18px;
     font-size: 13px;
     color: var(--brown-mid);
     line-height: 1.8;
   }
-
   .how-to ol li strong { color: var(--brown); }
 
   /* Animations */
@@ -489,7 +439,6 @@
     40% { transform: translateY(-8px); }
   }
 
-  /* Stagger cards */
   .book-card:nth-child(1) { animation-delay: 0.05s; }
   .book-card:nth-child(2) { animation-delay: 0.1s; }
   .book-card:nth-child(3) { animation-delay: 0.15s; }
@@ -509,8 +458,13 @@
   <header>
     <p class="logo">📚 La Boîte à Livres</p>
     <h1>Trouve ton <em>prochain</em> livre</h1>
-    <p class="subtitle">Recherche un titre, un auteur ou un ISBN — et copie les infos directement dans ta bibliothèque</p>
+    <p class="subtitle">Recherche un titre, un auteur ou un ISBN — et ajoute-le directement dans ta bibliothèque Notion ✨</p>
   </header>
+
+  <!-- Banner shown if VERCEL_URL is not configured -->
+  <div class="config-banner" id="configBanner">
+    ⚙️ <span>Pour activer l'ajout automatique dans Notion, configure ton URL Vercel dans le fichier HTML. <a href="#how-to">Comment faire ?</a></span>
+  </div>
 
   <div class="search-area">
     <div class="search-box">
@@ -540,13 +494,13 @@
     <div id="results"></div>
   </div>
 
-  <div class="how-to">
+  <div class="how-to" id="how-to">
     <p class="how-to-title">💡 Comment utiliser cet outil ?</p>
     <ol>
       <li>Recherche un livre par <strong>titre, auteur ou ISBN</strong></li>
-      <li>Clique sur une fiche pour voir le <strong>résumé</strong></li>
-      <li>Utilise <strong>"Copier tout"</strong> pour copier titre, auteur, pages et genre</li>
-      <li>Colle les infos dans ta <strong>Bibliothèque Notion</strong> ✨</li>
+      <li>Clique sur <strong>"+ Ajouter à Notion"</strong> pour l'envoyer directement dans ta bibliothèque</li>
+      <li>Le livre apparaît automatiquement avec le statut <strong>"À lire"</strong></li>
+      <li>Tu n'as plus qu'à ouvrir Notion pour le retrouver ! 🎉</li>
     </ol>
   </div>
 </div>
@@ -554,176 +508,209 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const input = document.getElementById('searchInput');
-const btn = document.getElementById('searchBtn');
-const stateMsg = document.getElementById('stateMsg');
-const resultsWrap = document.getElementById('resultsWrap');
-const resultsEl = document.getElementById('results');
-const resultsCount = document.getElementById('resultsCount');
-const toast = document.getElementById('toast');
+  // ─── CONFIGURATION ───────────────────────────────────────────────
+  // Remplace cette URL par l'URL de ton backend Vercel après déploiement
+  // Exemple : https://boite-a-livres-api.vercel.app/api/add-book
+  const VERCEL_API_URL = 'https://boite-a-livres-api.vercel.app/api/add-book';
+  // ─────────────────────────────────────────────────────────────────
 
-// Genre mapping from Google Books categories
-const genreMap = {
-  'fiction': '🐉 Fantaisie',
-  'fantasy': '🐉 Fantaisie',
-  'science fiction': '🚀 Science-Fiction',
-  'thriller': '🔪 Thrillers',
-  'mystery': '🚨 Policiers',
-  'detective': '🚨 Policiers',
-  'romance': '💖 Romance',
-  'comics': '🎨 BD / Manga / Roman graphique',
-  'manga': '🎨 BD / Manga / Roman graphique',
-  'biography': '✍️ Biographie & Témoignage',
-  'history': '🌍 Histoire & Société',
-  'self-help': '🧠 Développement Personnel',
-  'business': '💡 Entrepreneuriat & Business',
-  'computers': '🛠️ Bureautique & Tech',
-  'technology': '🛠️ Bureautique & Tech',
-  'design': '🖼️ Design & Graphisme',
-  'marketing': '📢 Marketing & Vente',
-  'travel': '✈️ Voyage & Aventure',
-  'health': '🧘Bien-être',
-  'psychology': '🧠 Développement Personnel',
-  'education': '🏫 Pédagogie & Formation',
-  'productivity': '📈 Productivité & Organisation',
-  'philosophy': '🎭 Classiques',
-  'classic': '🎭 Classiques',
-  'literary': '🎭 Classiques',
-};
+  const isConfigured = !VERCEL_API_URL.includes('REMPLACE_PAR');
+  if (isConfigured) document.getElementById('configBanner').classList.add('hidden');
 
-function guessGenre(categories) {
-  if (!categories || !categories.length) return null;
-  const raw = categories.join(' ').toLowerCase();
-  for (const [key, val] of Object.entries(genreMap)) {
-    if (raw.includes(key)) return val;
+  const input = document.getElementById('searchInput');
+  const btn = document.getElementById('searchBtn');
+  const stateMsg = document.getElementById('stateMsg');
+  const resultsWrap = document.getElementById('resultsWrap');
+  const resultsEl = document.getElementById('results');
+  const resultsCount = document.getElementById('resultsCount');
+  const toast = document.getElementById('toast');
+
+  const genreMap = {
+    'fiction': '🐉 Fantaisie', 'fantasy': '🐉 Fantaisie',
+    'science fiction': '🚀 Science-Fiction', 'thriller': '🔪 Thrillers',
+    'mystery': '🚨 Policiers', 'detective': '🚨 Policiers',
+    'romance': '💖 Romance', 'comics': '🎨 BD / Manga / Roman graphique',
+    'manga': '🎨 BD / Manga / Roman graphique', 'biography': '✍️ Biographie & Témoignage',
+    'history': '🌍 Histoire & Société', 'self-help': '🧠 Développement Personnel',
+    'business': '💡 Entrepreneuriat & Business', 'computers': '🛠️ Bureautique & Tech',
+    'technology': '🛠️ Bureautique & Tech', 'design': '🖼️ Design & Graphisme',
+    'marketing': '📢 Marketing & Vente', 'travel': '✈️ Voyage & Aventure',
+    'health': '🧘Bien-être', 'psychology': '🧠 Développement Personnel',
+    'education': '🏫 Pédagogie & Formation', 'productivity': '📈 Productivité & Organisation',
+    'philosophy': '🎭 Classiques', 'classic': '🎭 Classiques', 'literary': '🎭 Classiques',
+  };
+
+  function guessGenre(categories) {
+    if (!categories?.length) return null;
+    const raw = categories.join(' ').toLowerCase();
+    for (const [key, val] of Object.entries(genreMap)) {
+      if (raw.includes(key)) return val;
+    }
+    return null;
   }
-  return null;
-}
 
-function showToast(msg) {
-  toast.textContent = msg;
-  toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 2200);
-}
+  function showToast(msg, type = 'info') {
+    toast.textContent = msg;
+    toast.className = `toast ${type} show`;
+    setTimeout(() => toast.classList.remove('show'), 3000);
+  }
 
-function copyText(text, btn) {
-  navigator.clipboard.writeText(text).then(() => {
-    const orig = btn.innerHTML;
-    btn.innerHTML = '✓ Copié !';
-    btn.classList.add('success');
-    showToast('✓ ' + text.split('\n')[0].slice(0, 40) + '…');
-    setTimeout(() => { btn.innerHTML = orig; btn.classList.remove('success'); }, 2000);
-  });
-}
+  function copyText(text, btn) {
+    navigator.clipboard.writeText(text).then(() => {
+      const orig = btn.innerHTML;
+      btn.innerHTML = '✓ Copié';
+      btn.classList.add('success');
+      setTimeout(() => { btn.innerHTML = orig; btn.classList.remove('success'); }, 2000);
+    });
+  }
 
-function buildCard(book, idx) {
-  const info = book.volumeInfo || {};
-  const title = info.title || 'Titre inconnu';
-  const authors = info.authors ? info.authors.join(', ') : 'Auteur inconnu';
-  const pages = info.pageCount || '—';
-  const year = info.publishedDate ? info.publishedDate.slice(0, 4) : '—';
-  const genre = guessGenre(info.categories) || '—';
-  const desc = info.description ? info.description.slice(0, 280) + (info.description.length > 280 ? '…' : '') : 'Aucun résumé disponible.';
-  const coverUrl = info.imageLinks ? (info.imageLinks.thumbnail || info.imageLinks.smallThumbnail) : null;
-  const isbn = info.industryIdentifiers ? (info.industryIdentifiers.find(i => i.type === 'ISBN_13') || info.industryIdentifiers[0]) : null;
-
-  const fullInfo = `Titre : ${title}\nAuteur : ${authors}\nPages : ${pages}\nGenre : ${genre}${isbn ? '\nISBN : ' + isbn.identifier : ''}`;
-
-  const card = document.createElement('div');
-  card.className = 'book-card';
-  card.style.animationDelay = (idx * 0.06) + 's';
-
-  card.innerHTML = `
-    <div class="cover-wrap">
-      ${coverUrl
-        ? `<img src="${coverUrl}" alt="Couverture de ${title}" loading="lazy">`
-        : `<span class="cover-placeholder">📚</span>`}
-    </div>
-    <div class="card-body">
-      ${genre !== '—' ? `<p class="card-genre">${genre}</p>` : ''}
-      <p class="card-title" title="${title}">${title}</p>
-      <p class="card-author">par ${authors}</p>
-      <div class="card-meta">
-        ${pages !== '—' ? `<span class="meta-pill">📄 ${pages} pages</span>` : ''}
-        ${year !== '—' ? `<span class="meta-pill">📅 ${year}</span>` : ''}
-        ${isbn ? `<span class="meta-pill">🔖 ISBN</span>` : ''}
-      </div>
-      <div class="card-description">${desc}</div>
-      <div class="card-actions">
-        <button class="btn-copy primary" onclick="copyText(${JSON.stringify(fullInfo)}, this)">📋 Copier tout</button>
-        <button class="btn-copy secondary" onclick="copyText(${JSON.stringify(title)}, this)">Titre</button>
-        <button class="btn-copy secondary" onclick="copyText(${JSON.stringify(authors)}, this)">Auteur</button>
-        <button class="btn-expand" title="Voir le résumé" onclick="toggleExpand(this)">▾</button>
-      </div>
-    </div>
-  `;
-
-  // Click on card to expand (but not on buttons)
-  card.addEventListener('click', (e) => {
-    if (e.target.tagName === 'BUTTON') return;
-    toggleCard(card);
-  });
-
-  return card;
-}
-
-function toggleExpand(btn) {
-  const card = btn.closest('.book-card');
-  toggleCard(card);
-}
-
-function toggleCard(card) {
-  card.classList.toggle('expanded');
-  const btn = card.querySelector('.btn-expand');
-  if (btn) btn.textContent = card.classList.contains('expanded') ? '▴' : '▾';
-}
-
-async function search(query) {
-  if (!query) query = input.value.trim();
-  if (!query) return;
-  input.value = query;
-
-  stateMsg.innerHTML = `
-    <div class="loading-dots"><span></span><span></span><span></span></div>
-    <p class="state-text" style="margin-top:12px">Recherche en cours…</p>
-  `;
-  stateMsg.style.display = 'block';
-  resultsWrap.style.display = 'none';
-  resultsEl.innerHTML = '';
-
-  try {
-    const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=10&langRestrict=fr&printType=books`;
-    const res = await fetch(url);
-    const data = await res.json();
-
-    if (!data.items || data.items.length === 0) {
-      stateMsg.innerHTML = `
-        <span class="state-icon">😔</span>
-        <p class="state-text">Aucun résultat trouvé</p>
-        <p class="state-sub">Essaie un autre titre ou l'ISBN du livre</p>
-      `;
+  async function addToNotion(bookData, btn) {
+    if (!isConfigured) {
+      showToast('⚙️ Configure d\'abord ton URL Vercel dans le HTML', 'error');
       return;
     }
 
-    stateMsg.style.display = 'none';
-    resultsWrap.style.display = 'block';
-    resultsCount.innerHTML = `<strong>${data.items.length}</strong> résultats pour « ${query} »`;
+    const orig = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '⏳ Ajout en cours…';
 
-    data.items.forEach((book, i) => {
-      resultsEl.appendChild(buildCard(book, i));
+    try {
+      const res = await fetch(VERCEL_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(bookData),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        btn.innerHTML = '✅ Ajouté !';
+        btn.classList.add('success');
+        btn.disabled = true;
+        showToast(`✅ "${bookData.titre}" ajouté à ta bibliothèque !`, 'success');
+      } else {
+        throw new Error(data.error || 'Erreur inconnue');
+      }
+    } catch (err) {
+      btn.innerHTML = '❌ Erreur';
+      btn.classList.add('error-state');
+      btn.disabled = false;
+      showToast('❌ ' + err.message, 'error');
+      setTimeout(() => {
+        btn.innerHTML = orig;
+        btn.classList.remove('error-state');
+      }, 3000);
+    }
+  }
+
+  function buildCard(book, idx) {
+    const info = book.volumeInfo || {};
+    const titre = info.title || 'Titre inconnu';
+    const auteur = info.authors ? info.authors.join(', ') : 'Auteur inconnu';
+    const pages = info.pageCount || null;
+    const year = info.publishedDate ? info.publishedDate.slice(0, 4) : '—';
+    const genre = guessGenre(info.categories) || null;
+    const desc = info.description ? info.description.slice(0, 280) + (info.description.length > 280 ? '…' : '') : 'Aucun résumé disponible.';
+    const coverUrl = info.imageLinks ? (info.imageLinks.thumbnail || info.imageLinks.smallThumbnail) : null;
+    const isbn = info.industryIdentifiers ? (info.industryIdentifiers.find(i => i.type === 'ISBN_13') || info.industryIdentifiers[0]) : null;
+
+    const bookData = {
+      titre,
+      auteur,
+      pages: pages ? String(pages) : null,
+      genre,
+      couverture: coverUrl ? coverUrl.replace('http://', 'https://') : null,
+      isbn: isbn?.identifier || null,
+    };
+
+    const card = document.createElement('div');
+    card.className = 'book-card';
+    card.style.animationDelay = (idx * 0.06) + 's';
+
+    card.innerHTML = `
+      <div class="cover-wrap">
+        ${coverUrl
+          ? `<img src="${coverUrl.replace('http://', 'https://')}" alt="Couverture" loading="lazy">`
+          : `<span class="cover-placeholder">📚</span>`}
+      </div>
+      <div class="card-body">
+        ${genre ? `<p class="card-genre">${genre}</p>` : ''}
+        <p class="card-title" title="${titre}">${titre}</p>
+        <p class="card-author">par ${auteur}</p>
+        <div class="card-meta">
+          ${pages ? `<span class="meta-pill">📄 ${pages} pages</span>` : ''}
+          ${year !== '—' ? `<span class="meta-pill">📅 ${year}</span>` : ''}
+          ${isbn ? `<span class="meta-pill">🔖 ISBN</span>` : ''}
+        </div>
+        <div class="card-description">${desc}</div>
+        <div class="card-actions">
+          <button class="btn btn-notion" data-book='${JSON.stringify(bookData).replace(/'/g, "&#39;")}'>
+            📚 Ajouter à Notion
+          </button>
+          <button class="btn btn-copy" onclick="copyText('${titre.replace(/'/g, "\\'")}', this)">Copier</button>
+          <button class="btn-expand" onclick="toggleExpand(this)">▾</button>
+        </div>
+      </div>
+    `;
+
+    // Bind Notion button
+    card.querySelector('.btn-notion').addEventListener('click', function() {
+      const data = JSON.parse(this.getAttribute('data-book'));
+      addToNotion(data, this);
     });
 
-  } catch (err) {
-    stateMsg.innerHTML = `
-      <span class="state-icon">⚠️</span>
-      <p class="state-text">Erreur de connexion</p>
-      <p class="state-sub">Vérifie ta connexion internet et réessaie</p>
-    `;
+    return card;
   }
-}
 
-btn.addEventListener('click', () => search(input.value.trim()));
-input.addEventListener('keydown', e => { if (e.key === 'Enter') search(input.value.trim()); });
+  function toggleExpand(btn) {
+    const card = btn.closest('.book-card');
+    card.classList.toggle('expanded');
+    btn.textContent = card.classList.contains('expanded') ? '▴' : '▾';
+  }
+
+  async function search(query) {
+    if (!query) query = input.value.trim();
+    if (!query) return;
+    input.value = query;
+
+    stateMsg.innerHTML = `
+      <div class="loading-dots"><span></span><span></span><span></span></div>
+      <p class="state-text" style="margin-top:12px">Recherche en cours…</p>
+    `;
+    stateMsg.style.display = 'block';
+    resultsWrap.style.display = 'none';
+    resultsEl.innerHTML = '';
+
+    try {
+      const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=10&printType=books`;
+      const res = await fetch(url);
+      const data = await res.json();
+
+      if (!data.items?.length) {
+        stateMsg.innerHTML = `
+          <span class="state-icon">😔</span>
+          <p class="state-text">Aucun résultat trouvé</p>
+          <p class="state-sub">Essaie un autre titre ou l'ISBN du livre</p>
+        `;
+        return;
+      }
+
+      stateMsg.style.display = 'none';
+      resultsWrap.style.display = 'block';
+      resultsCount.innerHTML = `<strong>${data.items.length}</strong> résultats pour « ${query} »`;
+      data.items.forEach((book, i) => resultsEl.appendChild(buildCard(book, i)));
+
+    } catch (err) {
+      stateMsg.innerHTML = `
+        <span class="state-icon">⚠️</span>
+        <p class="state-text">Erreur de connexion</p>
+        <p class="state-sub">Vérifie ta connexion internet et réessaie</p>
+      `;
+    }
+  }
+
+  btn.addEventListener('click', () => search(input.value.trim()));
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') search(input.value.trim()); });
 </script>
 </body>
 </html>
