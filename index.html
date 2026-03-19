@@ -297,18 +297,24 @@
   <div id="helpBox" style="display:none;background:white;border:1.5px solid rgba(107,76,59,0.12);border-radius:14px;padding:20px;margin-bottom:20px;animation:fadeDown 0.3s ease both">
     <p style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;margin-bottom:10px">📖 Comment trouver tes infos Notion</p>
     <p style="font-size:13px;color:var(--brown-mid);margin-bottom:8px"><strong>1. Ton Token Notion :</strong></p>
-    <ol style="font-size:12px;color:var(--brown-mid);padding-left:18px;line-height:1.8;margin-bottom:12px">
+    <ol style="font-size:12px;color:var(--brown-mid);padding-left:18px;line-height:1.8;margin-bottom:4px">
       <li>Va sur <a href="https://www.notion.so/my-integrations" target="_blank" style="color:var(--accent)">notion.so/my-integrations</a></li>
       <li>Clique sur ton intégration <strong>"Boîte à Livres API"</strong></li>
-      <li>Copie le <strong>"Internal Integration Secret"</strong> (commence par <code>secret_...</code>)</li>
+      <li>Copie le <strong>"Internal Integration Secret"</strong></li>
     </ol>
+    <div style="background:var(--cream);border-radius:8px;padding:8px 12px;font-family:monospace;font-size:11px;margin:6px 0 14px;color:var(--brown-mid)">
+      <span style="background:#FDE68A;padding:2px 4px;border-radius:3px;font-weight:700">ntn_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</span> ou <span style="background:#FDE68A;padding:2px 4px;border-radius:3px;font-weight:700">secret_xxxxxxxxxx...</span>
+    </div>
     <p style="font-size:13px;color:var(--brown-mid);margin-bottom:8px"><strong>2. Ton Database ID :</strong></p>
-    <ol style="font-size:12px;color:var(--brown-mid);padding-left:18px;line-height:1.8;margin-bottom:12px">
-      <li>Ouvre ta base de données <strong>"Ma Bibliothèque Personnelle"</strong> dans Notion</li>
-      <li>Copie l'URL — elle ressemble à :<br><code style="font-size:11px">notion.so/workspace/<strong>xxxxxxxx...xxxxxxxx</strong>?v=...</code></li>
-      <li>Copie uniquement le code après Boîte à livres (32 caractères)</li>
-      <li>Le Database ID c'est la partie en gras ci-dessus (32 caractères)</li>
+    <ol style="font-size:12px;color:var(--brown-mid);padding-left:18px;line-height:1.8;margin-bottom:4px">
+      <li>Ouvre <strong>"Ma Bibliothèque Personnelle"</strong> dans Notion</li>
+      <li>Clique sur <strong>...</strong> → <strong>"Ouvrir en tant que page"</strong></li>
+      <li>Regarde l'URL dans ton navigateur :</li>
     </ol>
+    <div style="background:var(--cream);border-radius:8px;padding:8px 12px;font-family:monospace;font-size:11px;margin:6px 0 4px;word-break:break-all;line-height:1.8">
+      notion.so/workspace/<span style="background:#FDE68A;padding:2px 4px;border-radius:3px;font-weight:700">30794ba0951f80b1b7bc</span>?v=...
+    </div>
+    <p style="font-size:11px;color:var(--brown-light);margin-bottom:12px">👆 Copie la partie <span style="background:#FDE68A;padding:1px 3px;border-radius:3px;font-weight:600">surlignée</span> — juste avant le <code>?v=</code>. Tu peux aussi coller l'URL complète, l'outil extrait l'ID automatiquement !</p>
     <button onclick="document.getElementById('helpBox').style.display='none'" style="background:var(--accent);color:white;border:none;padding:8px 16px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer">Fermer</button>
   </div>
 
@@ -369,7 +375,12 @@ function getConfig() {
 
 function saveConfig() {
   const token = document.getElementById('inputToken').value.trim();
-  const dbId  = document.getElementById('inputDbId').value.trim().replace(/-/g, '');
+  // Accept full Notion URL or raw ID — extract the 32-char ID automatically
+  let rawDb = document.getElementById('inputDbId').value.trim();
+  // If it's a URL, extract the ID (last path segment before ?v=)
+  const urlMatch = rawDb.match(/([a-f0-9]{32})(?:[?&]|$)/i);
+  if (urlMatch) rawDb = urlMatch[1];
+  const dbId = rawDb.replace(/-/g, '').toLowerCase();
   const status = document.getElementById('configStatus');
 
   if (!token.startsWith('secret_') && !token.startsWith('ntn_')) {
