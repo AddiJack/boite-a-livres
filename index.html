@@ -265,7 +265,7 @@
       <div class="config-fields">
         <div class="config-field">
           <label>🔑 Token Notion (Internal Integration Secret)</label>
-          <input type="password" id="inputToken" placeholder="secret_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" autocomplete="off">
+          <input type="password" id="inputToken" placeholder="secret_xxx... ou ntn_xxx..." autocomplete="off">
         </div>
         <div class="config-field">
           <label>🗄️ Database ID (ID de ta bibliothèque Notion)</label>
@@ -371,8 +371,8 @@ function saveConfig() {
   const dbId  = document.getElementById('inputDbId').value.trim().replace(/-/g, '');
   const status = document.getElementById('configStatus');
 
-  if (!token.startsWith('secret_')) {
-    status.textContent = '⚠️ Le token doit commencer par "secret_"';
+  if (!token.startsWith('secret_') && !token.startsWith('ntn_')) {
+    status.textContent = '⚠️ Le token doit commencer par "secret_" ou "ntn_"';
     status.className = 'config-status warn';
     status.style.display = 'flex';
     return;
