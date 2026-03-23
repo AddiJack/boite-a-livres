@@ -251,7 +251,7 @@
   <header>
     <p class="logo">📚 La Boîte à Livres</p>
     <h1>Trouve ton <em>prochain</em> livre</h1>
-    <p class="subtitle">Recherche un titre ou un auteur — ajoute-le directement dans ton Notion ✨</p>
+    <p class="subtitle">Recherche un titre, un auteur ou un ISBN — ajoute-le directement dans ton Notion ✨</p>
   </header>
 
   <!-- ── Config Panel ── -->
@@ -325,7 +325,7 @@
   <div class="search-area">
     <div class="search-box">
       <div class="search-icon">🔍</div>
-      <input type="text" id="searchInput" placeholder="Le seigneur des anneaux, Victor Hugo, ..." autocomplete="off">
+      <input type="text" id="searchInput" placeholder="Harry Potter, Victor Hugo, Amélie Nothomb…" autocomplete="off">
       <button id="searchBtn">Rechercher</button>
     </div>
     <div class="search-tips">
@@ -359,7 +359,7 @@
     <p class="how-to-title">💡 Comment utiliser cet outil ?</p>
     <ol>
       <li>Configure ta connexion Notion <strong>une seule fois</strong> en haut</li>
-      <li>Recherche un livre par <strong>titre ou auteur</strong></li>
+      <li>Recherche un livre par <strong>titre, auteur ou ISBN</strong></li>
       <li>Clique <strong>"📚 Ajouter à Notion"</strong> — le livre apparaît dans ta bibliothèque !</li>
       <li>Tes infos de connexion sont <strong>sauvegardées dans ton navigateur</strong> 🔒</li>
     </ol>
@@ -460,17 +460,18 @@ const genreRules = [
   { keywords: ['fantasy', 'fantaisie', 'fantastique', 'magic'],     genre: '🐉 Fantaisie' },
   { keywords: ['thriller', 'suspense'],                              genre: '🔪 Thrillers' },
   { keywords: ['mystery', 'detective', 'crime', 'policier','polar'],genre: '🚨 Policiers' },
-  { keywords: ['romance', 'love story', 'amour', 'love'],                   genre: '💖 Romance' },
-  { keywords: ['comics', 'manga', 'graphic novel', 'bande dessin', 'bd'], genre: '🎨 BD / Manga / Roman graphique' },
-  { keywords: ['biography', 'autobio', 'memoir', 'témoignage', 'bio', 'biographie'],     genre: '✍️ Biographie & Témoignage' },
+  { keywords: ['romance', 'love story', 'amour'],                   genre: '💖 Romance' },
+  { keywords: ['comics', 'manga', 'graphic novel', 'bande dessin'], genre: '🎨 BD / Manga / Roman graphique' },
+  { keywords: ['biography', 'autobio', 'memoir', 'témoignage'],     genre: '✍️ Biographie & Témoignage' },
   { keywords: ['history', 'histoire', 'historical', 'society'],     genre: '🌍 Histoire & Société' },
+  { keywords: ['self-help', 'personal development', 'motivation'],  genre: '🧠 Développement Personnel' },
   { keywords: ['business', 'entrepreneurship', 'startup'],          genre: '💡 Entrepreneuriat & Business' },
   { keywords: ['computers', 'programming', 'software', 'tech'],     genre: '🛠️ Bureautique & Tech' },
-  { keywords: ['design', 'graphisme', 'typography', 'art'],                genre: '🖼️ Design & Graphisme' },
+  { keywords: ['design', 'graphisme', 'typography'],                genre: '🖼️ Design & Graphisme' },
   { keywords: ['marketing', 'advertising', 'sales', 'vente'],       genre: '📢 Marketing & Vente' },
   { keywords: ['travel', 'voyage', 'adventure', 'aventure'],        genre: '✈️ Voyage & Aventure' },
   { keywords: ['health', 'wellness', 'bien-être', 'yoga'],          genre: '🧘Bien-être' },
-  { keywords: ['psychology', 'psychologie', 'neuroscience', 'self-help', 'personal development', 'motivation'],        genre: '🧠 Développement Personnel' },
+  { keywords: ['psychology', 'psychologie', 'neuroscience'],        genre: '🧠 Développement Personnel' },
   { keywords: ['education', 'pédagogie', 'formation'],              genre: '🏫 Pédagogie & Formation' },
   { keywords: ['productivity', 'organisation', 'habits'],           genre: '📈 Productivité & Organisation' },
   { keywords: ['philosophy', 'classic', 'classique', 'literary'],   genre: '🎭 Classiques' },
@@ -629,6 +630,15 @@ function setMax(n) {
   if (q) doSearch(q);
 }
 
+// Google Books API is limited to 20 results per request
+// We paginate to get 30 or 60 results
+async function fetchBooks(query, startIndex = 0, limit = 20) {
+  const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=20&startIndex=${startIndex}&printType=books`;
+  const res = await fetch(url);
+  const data = await res.json();
+  return data.items || [];
+}
+
 async function doSearch(query) {
   if (!query) query = searchInput.value.trim();
   if (!query) return;
@@ -640,19 +650,32 @@ async function doSearch(query) {
   resultsEl.innerHTML = '';
 
   try {
-    const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&maxResults=${maxResults}&printType=books`;
-    const res  = await fetch(url);
-    const data = await res.json();
+    let books = [];
 
-    if (!data.items?.length) {
-      stateMsg.innerHTML = `<span class="state-icon">😔</span><p class="state-text">Aucun résultat trouvé</p><p class="state-sub">Essaie un autre titre ou l'ISBN</p>`;
+    if (maxResults <= 20) {
+      // Single request
+      books = await fetchBooks(query, 0);
+      books = books.slice(0, maxResults);
+    } else {
+      // Multiple paginated requests (max 20 per call)
+      const pages = Math.ceil(maxResults / 20);
+      const requests = [];
+      for (let i = 0; i < pages; i++) {
+        requests.push(fetchBooks(query, i * 20));
+      }
+      const results = await Promise.all(requests);
+      books = results.flat().slice(0, maxResults);
+    }
+
+    if (!books.length) {
+      stateMsg.innerHTML = `<span class="state-icon">😔</span><p class="state-text">Aucun résultat trouvé</p><p class="state-sub">Essaie un autre titre ou l'auteur</p>`;
       return;
     }
 
     stateMsg.style.display = 'none';
     resultsWrap.style.display = 'block';
-    resultsCount.innerHTML = `<strong>${data.items.length}</strong> résultats pour « ${query} »`;
-    data.items.forEach((book, i) => resultsEl.appendChild(buildCard(book, i)));
+    resultsCount.innerHTML = `<strong>${books.length}</strong> résultats pour « ${query} »`;
+    books.forEach((book, i) => resultsEl.appendChild(buildCard(book, i)));
   } catch {
     stateMsg.innerHTML = `<span class="state-icon">⚠️</span><p class="state-text">Erreur de connexion</p><p class="state-sub">Vérifie ta connexion et réessaie</p>`;
   }
